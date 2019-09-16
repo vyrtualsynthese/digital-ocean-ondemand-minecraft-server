@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  jre:
+    image: openjdk:8u222-slim
+    working_dir: "/usr/src/app"
+
+    # You should change this line to match your droplet configuration
+    command: "java -Xms1G -Xmx1G -jar server.jar"
+    ports:
+      - 25565:25565
+      - 25575:25575
+
+    # Verify the name of your Minecraft Server Folder
+    volumes:
+      - ./minecraft-server:/usr/src/app
+
