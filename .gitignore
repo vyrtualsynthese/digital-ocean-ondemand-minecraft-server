@@ -2,3 +2,5 @@
 terraform.tfvars
 .terraform
 terraform.tfstate*
+minecraft-server
+minecraft-server.tar.gz
