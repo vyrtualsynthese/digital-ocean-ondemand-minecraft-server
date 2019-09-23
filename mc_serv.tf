@@ -18,4 +18,8 @@ resource "digitalocean_droplet" "mc-server" {
     timeout = "2m"
     host = digitalocean_droplet.mc-server.ipv4_address
   }
+  provisioner "local-exec" {
+    when    = "destroy"
+    command = "echo 'Destroy-time provisioner'"
+  }
 }
