@@ -20,6 +20,9 @@ resource "digitalocean_droplet" "mc-server" {
   }
   provisioner "remote-exec" {
     inline = [
+      "wget https://github.com/Tiiffi/mcrcon/releases/download/v0.0.5/mcrcon-0.0.5-linux-x86-64.tar.gz",
+      "tar -xvf mcrcon-0.0.5-linux-x86-64.tar.gz",
+      "mv mcrcon /usr/local/bin",
       "tar -xvf minecraft-server.tar.gz",
       "cd minecraft-server",
       "docker-compose up -d"
@@ -28,6 +31,10 @@ resource "digitalocean_droplet" "mc-server" {
   provisioner "remote-exec" {
     when    = "destroy"
     inline = [
+      "mcrcon -H localhost -p ${var.rcon_pwd} save-all",
+      "sleep 30",
+      "mcrcon -H localhost -p ${var.rcon_pwd} stop",
+      "sleep 30",
       "docker-compose down",
       "tar -cvf minecraft-server.tar.gz minecraft-server",
     ]

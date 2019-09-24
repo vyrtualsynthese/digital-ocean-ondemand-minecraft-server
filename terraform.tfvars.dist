@@ -7,3 +7,6 @@ pvt_key=
 
 // The fingerprint of your ssh. On linux get it with command 'ssh-keygen -l -E sha256 -f $file' where $file is the path to your rsa key.
 ssh_fingerprint =
+
+// The rcon password of your server
+rcon_pwd =
