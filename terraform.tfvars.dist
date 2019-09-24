@@ -1,7 +1,9 @@
 // Your Digital Ocean Api token generated from here https://cloud.digitalocean.com/account/api/tokens
 do_token =
+
 // Path to your generated rsa key to be uploaded to the newly generated droplet to help you indentify
 pub_key=
 pvt_key=
+
 // The fingerprint of your ssh. On linux get it with command 'ssh-keygen -l -E sha256 -f $file' where $file is the path to your rsa key.
 ssh_fingerprint =

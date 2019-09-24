@@ -5,7 +5,7 @@ services:
     working_dir: "/usr/src/app"
 
     # You should change this line to match your droplet configuration
-    command: "java -Xms1G -Xmx1G -jar server.jar"
+    command: "java -Xms512M -Xmx512M -jar server.jar"
     ports:
       - 25565:25565
       - 25575:25575
