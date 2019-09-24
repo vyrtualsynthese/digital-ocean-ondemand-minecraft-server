@@ -8,12 +8,8 @@ resource "digitalocean_droplet" "mc-server" {
     var.ssh_fingerprint
   ]
   provisioner "file" {
-    source      = "minecraft-server.tar.gz"
-    destination = "minecraft-server.tar.gz"
-  }
-  provisioner "file" {
-    source      = "docker-compose.yml"
-    destination = "docker-compose.yml"
+    source      = "uploadFolder/"
+    destination = "."
   }
   connection {
     user = "root"
@@ -38,6 +34,6 @@ resource "digitalocean_droplet" "mc-server" {
   }
   provisioner "local-exec" {
     when    = "destroy"
-    command = "scp root@${digitalocean_droplet.mc-server.ipv4_address}:minecraft-server.tar.gz ."
+    command = "scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@${digitalocean_droplet.mc-server.ipv4_address}:minecraft-server.tar.gz uploadFolder"
   }
 }
