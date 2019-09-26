@@ -1,8 +1,8 @@
 resource "digitalocean_droplet" "mc-server" {
   image = "docker-18-04"
   name = "mc-server"
-  region = "fra1"
-  size = "s-1vcpu-1gb"
+  region = "fra1" // Move to .env
+  size = "s-1vcpu-1gb" // Move to .env
   private_networking = true
   ssh_keys = [
     var.ssh_fingerprint
@@ -21,22 +21,22 @@ resource "digitalocean_droplet" "mc-server" {
   provisioner "remote-exec" {
     inline = [
       "wget https://github.com/Tiiffi/mcrcon/releases/download/v0.0.5/mcrcon-0.0.5-linux-x86-64.tar.gz",
-      "tar -xvf mcrcon-0.0.5-linux-x86-64.tar.gz",
+      "tar -xvzf mcrcon-0.0.5-linux-x86-64.tar.gz",
       "mv mcrcon /usr/local/bin",
-      "tar -xvf minecraft-server.tar.gz",
+      "tar -xvzf minecraft-server.tar.gz",
       "cd minecraft-server",
       "docker-compose up -d"
-      ]
+    ]
   }
   provisioner "remote-exec" {
     when    = "destroy"
     inline = [
-      "mcrcon -H localhost -p ${var.rcon_pwd} save-all",
-      "sleep 30",
+      "mcrcon -H localhost -p ${var.rcon_pwd} save-all", // TODO: Replace with script bash
+      "sleep 15", // TODO: Investigate the rcon solution to get status from mc server
       "mcrcon -H localhost -p ${var.rcon_pwd} stop",
-      "sleep 30",
+      "sleep 15",
       "docker-compose down",
-      "tar -cvf minecraft-server.tar.gz minecraft-server",
+      "tar -cvzf minecraft-server.tar.gz minecraft-server",
     ]
   }
   provisioner "local-exec" {
