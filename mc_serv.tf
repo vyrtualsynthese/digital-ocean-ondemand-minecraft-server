@@ -1,8 +1,8 @@
 resource "digitalocean_droplet" "mc-server" {
   image = "docker-18-04"
   name = "mc-server"
-  region = "fra1" // Move to .env
-  size = "s-1vcpu-1gb" // Move to .env
+  region = var.region
+  size = var.size
   private_networking = true
   ssh_keys = [
     var.ssh_fingerprint
@@ -31,7 +31,7 @@ resource "digitalocean_droplet" "mc-server" {
   provisioner "remote-exec" {
     when    = "destroy"
     inline = [
-      "mcrcon -H localhost -p ${var.rcon_pwd} save-all", // TODO: Replace with script bash
+      "mcrcon -H localhost -p ${var.rcon_pwd} save-all",
       "sleep 15", // TODO: Investigate the rcon solution to get status from mc server
       "mcrcon -H localhost -p ${var.rcon_pwd} stop",
       "sleep 15",

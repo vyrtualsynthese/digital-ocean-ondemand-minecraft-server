@@ -10,3 +10,7 @@ ssh_fingerprint =
 
 // The rcon password of your server
 rcon_pwd =
+
+// Instance Parameters find it in your doctl
+region =
+size =
