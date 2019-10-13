@@ -25,7 +25,8 @@ resource "digitalocean_droplet" "mc-server" {
       "mv mcrcon /usr/local/bin",
       "tar -xvzf minecraft-server.tar.gz",
       "cd minecraft-server",
-      "docker-compose up -d"
+      "docker-compose up -d",
+      "dig +short myip.opendns.com @resolver1.opendns.com"
     ]
   }
   provisioner "remote-exec" {
